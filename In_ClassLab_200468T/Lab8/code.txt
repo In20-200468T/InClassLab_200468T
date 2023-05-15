@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+  
+// function to heapify the tree
+void heapify(int arr[], int n, int i)
+{
+    int max = i;  
+    int left = 2*i + 1; 
+    // left child node = 2*i + 1
+    int right = 2*i + 2; 
+    // right child node = 2*i + 2
+    
+    // when right child > max
+    if (right < n && arr[right] > arr[max])
+        max = right;
+
+    // when left child > root
+    if (left < n && arr[left] > arr[max])
+        max = left;
+ 
+    // when the max != root
+    if (max != i) {
+        swap(arr[i], arr[max]);
+        heapify(arr, n, max);
+    }
+}
+  
+// implementing heap sort
+void heapSort(int arr[], int n)
+{
+    // Get max heap
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+ 
+    // extract elements from the Max-Heap 
+    for (int i=n-1; i>0; i--) {
+        swap(arr[0], arr[i]);
+        heapify(arr, i, 0);
+        // heapify the remaining elements
+    }
+}
+  
+/* print contents of array */
+void displayArray(int arr[], int n)
+{
+   for (int i=0; i<n; ++i)
+   cout << arr[i] << " ";
+   cout << "\n";
+}
+  
+// main program
+int main()
+{
+    int n;
+    cout << "Enter the number of elements of the Sample Input array: ";
+    cin >> n;
+    int heap_arr[n];
+    cout << "Enter the Sample Input array: ";
+    for (int i=0; i<n; ++i)
+        cin >> heap_arr[i];
+    
+    cout<<"Sample Output:"<<endl;
+
+    cout<<"Input array:"<<endl;
+    displayArray(heap_arr,n);
+  
+    heapSort(heap_arr, n);
+  
+    cout << "Sorted Array:"<<endl;
+    displayArray(heap_arr, n);
+}
